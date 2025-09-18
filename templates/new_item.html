@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Uusi ilmoitus</title>
+</head>
+
+<body>
+  <h1>Uusi ilmoitus</h1>
+  <form action="/create_item" method="post">
+    <p>
+      Otsikko: <br />
+      <input type="text" name="title" />
+    </p>
+
+    <p>
+      Aika: <br />
+      <input type="datetime-local" name="meeting" />
+    </p>
+    
+    <p>
+      Paikka: <br />
+      <input type="text" name="place" />
+    </p>
+
+    <p>
+      Kirjan teema: <br />
+      <input type="text" name="genre" />
+    </p>
+    
+    <p>
+      Kirjan tyyppi: <br />
+      <input type="text" name="book_type" />
+    </p>
+    
+    <p>
+      Keskusteluaihe: <br />
+       <textarea name = "description" rows = "8" cols = "60"></textarea>
+    </p>
+    
+    <input type="submit" value="Luo ilmoitus" />
+  </form>
+</body>
+
+</html>
