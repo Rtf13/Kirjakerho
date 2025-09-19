@@ -8,16 +8,30 @@ def get_items():
     return db.query(sql)
 
 def get_item(item_id):
-    sql = """SELECT items.title,
+    sql = """SELECT items.id,
+                    items.title,
                     items.description,
                     items.meeting,
                     items.place,
                     items.book_type,
                     items.genre,
-                    users.username
+                    users.username,
+                    users.id user_id
 
                 FROM items, users
                 WHERE items.user_id = users.id AND
                       items.id = ? """
 
     return db.query(sql,[item_id])[0]
+
+
+
+def update_item(item_id, title, meeting, place, genre, book_type, description):
+    sql = """UPDATE items SET title = ?,
+                              description = ?,
+                              meeting = ?,
+                              place = ?,
+                              book_type = ?,
+                              genre = ?
+                           WHERE id = ?"""
+    db.execute(sql, [title, description, meeting, place, book_type, genre, item_id] )
