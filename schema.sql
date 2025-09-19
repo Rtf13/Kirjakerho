@@ -14,3 +14,4 @@ CREATE TABLE items (
    description TEXT,
    user_id INTEGER REFERENCES users
 );
+

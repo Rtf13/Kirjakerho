@@ -6,6 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import config
 import db
 import items
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -17,7 +18,22 @@ def new_item():
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    all_items = items.get_items()
+    return render_template("index.html", items= all_items)
+
+@app.route("/item/<int:item_id>")
+def show_item(item_id):
+    item = items.get_item(item_id)
+    return render_template("show_item.html", item = item)
+
+
+@app.template_filter("date_clean")
+def date_clean(value):
+    if not value:
+        return ""
+    dt = datetime.fromisoformat(value)
+    return dt.strftime("%d.%m.%Y %H:%M")
+
 
 @app.route("/create_item", methods=["POST"])
 def create_item():
