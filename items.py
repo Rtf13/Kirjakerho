@@ -45,6 +45,7 @@ def find_items(query):
     sql = """SELECT id, title
              FROM items
              WHERE title LIKE ? OR description LIKE ?
+             OR genre LIKE ? OR place LIKE ?
              ORDER BY id DESC """
     like = "%" + query + "%"
-    return db.query(sql, [like, like])
+    return db.query(sql, [like, like, like, like])

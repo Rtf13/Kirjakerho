@@ -31,7 +31,6 @@ def find_item():
         results = []
     return render_template("find_item.html", query = query, results = results)
 
-
 @app.route("/item/<int:item_id>")
 def show_item(item_id):
     item = items.get_item(item_id)
