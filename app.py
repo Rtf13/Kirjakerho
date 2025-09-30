@@ -104,11 +104,23 @@ def update_item():
         abort(403)
     item_id = request.form["item_id"]
     title = request.form["title"]
+    if not title or len(title) >50:
+        abort(403)
     meeting = request.form["meeting"]
+    if not meeting:
+        abort(403)
     place = request.form["place"]
+    if not place or len(place) >50:
+        abort(403)
     genre = request.form["genre"]
+    if not genre or len(genre) >50:
+        abort(403)
     book_type = request.form["book_type"]
+    if not book_type or len(book_type) >50:
+        abort(403)
     description = request.form["description"]
+    if not description or len(description) >1000:
+        abort(403)
 
     items.update_item(item_id, title, meeting, place, genre, book_type, description)
     return redirect("/item/" + str(item_id))
