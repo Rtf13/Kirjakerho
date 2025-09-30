@@ -57,12 +57,25 @@ def date_clean(value):
 @app.route("/create_item", methods=["POST"])
 def create_item():
     require_login()
+
     title = request.form["title"]
+    if not title or len(title) > 50:
+        abort(403)
     meeting = request.form["meeting"]
+    if not meeting:
+        abort(403)
     place = request.form["place"]
+    if not len or  len(place) > 50:
+        abort(403)
     genre = request.form["genre"]
+    if not genre or len(genre) > 50:
+        abort(403)
     book_type = request.form["book_type"]
+    if not book_type or len(book_type) > 50:
+        abort(403)
     description = request.form["description"]
+    if not description or  len(description) > 1000:
+        abort(403)
     user_id = session["user_id"]
     items.add_item(title, meeting, place, genre, book_type, description, user_id)
 
