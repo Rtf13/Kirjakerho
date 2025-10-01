@@ -38,8 +38,6 @@ def get_item(item_id):
                     items.description,
                     items.meeting,
                     items.place,
-                    items.book_type,
-                    items.genre,
                     users.username,
                     users.id user_id
 
@@ -51,15 +49,21 @@ def get_item(item_id):
     return result[0] if result else None
 
 
-def update_item(item_id, title, meeting, place, genre, book_type, description):
+def update_item(item_id, title, meeting, place, description, classes):
     sql = """UPDATE items SET title = ?,
                               description = ?,
                               meeting = ?,
-                              place = ?,
-                              book_type = ?,
-                              genre = ?
-                           WHERE id = ?"""
-    db.execute(sql, [title, description, meeting, place, book_type, genre, item_id] )
+                              place = ?
+                            WHERE id = ?"""
+    db.execute(sql, [title, description, meeting, place, item_id] )
+
+    sql = "DELETE FROM item_classes WHERE item_id = ?"
+    db.execute(sql, [item_id])
+
+    sql = "INSERT INTO item_classes (item_id, title, value) VALUES (?, ?, ?)"
+    for title, value in classes:
+        db.execute(sql,  [item_id, title, value])
+
 
 
 def remove_item(item_id):

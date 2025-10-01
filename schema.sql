@@ -9,8 +9,6 @@ CREATE TABLE items (
    title TEXT,
    meeting DATETIME,
    place TEXT,
-   genre TEXT,
-   book_type TEXT,
    description TEXT,
    user_id INTEGER REFERENCES users
 );
