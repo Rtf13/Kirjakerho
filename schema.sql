@@ -21,3 +21,9 @@ CREATE TABLE item_classes (
     title TEXT,
     value TEXT
 );
+
+CREATE TABLE classes (
+    id INTEGER PRIMARY KEY,
+    title TEXT, 
+    value TEXT
+);

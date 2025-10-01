@@ -21,7 +21,8 @@ def require_login():
 @app.route("/new_item")
 def new_item():
     require_login()
-    return render_template("new_item.html")
+    classes = items.get_all_classes()
+    return render_template("new_item.html", classes = classes)
 
 @app.route("/")
 def index():
@@ -78,28 +79,21 @@ def create_item():
     if not meeting:
         abort(403)
     place = request.form["place"]
-    if not len or  len(place) > 50:
+    if not place or  len(place) > 50:
         abort(403)
-    genre = request.form["genre"]
-    if not genre or len(genre) > 50:
-        abort(403)
-    book_type = request.form["book_type"]
-    if not book_type or len(book_type) > 50:
-        abort(403)
+    
+
     description = request.form["description"]
     if not description or  len(description) > 1000:
         abort(403)
     user_id = session["user_id"]
-
     classes = []
-    genre = request.form["genre"]
-    if genre:
-        classes.append(("Laji", genre))
-    type = request.form["book_type"]
-    if type:
-        classes.append(("teoksen tyyppi", type))
-
-    items.add_item(title, meeting, place, genre, book_type, description, user_id, classes)
+    for entry in request.form.getlist("classes"):
+        if entry:
+            parts = entry.split(":")
+            classes.append((parts[0], parts[1]))
+        
+    items.add_item(title, meeting, place, description, user_id, classes)
 
 
     return redirect("/")

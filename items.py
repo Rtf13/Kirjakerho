@@ -1,7 +1,22 @@
 import db
-def add_item(title, meeting, place, genre, book_type, description, user_id, classes):
-    sql = """INSERT INTO items (title, meeting, place, genre, book_type, description, user_id) VALUES (?, ?, ?, ?, ? ,? ,?)"""
-    db.execute(sql, [title, meeting, place, genre, book_type, description, user_id])
+
+def get_all_classes():
+    sql = "SELECT title, value FROM classes ORDER BY id"
+    result = db.query(sql)
+
+    classes = {}
+    for title, value in result:
+        classes[title] = []
+
+    for title, value in result:
+        classes[title].append(value)
+
+    return classes
+
+
+def add_item(title, meeting, place, description, user_id, classes):
+    sql = """INSERT INTO items (title, meeting, place, description, user_id) VALUES (?, ?, ?, ?, ? )"""
+    db.execute(sql, [title, meeting, place, description, user_id])
 
     item_id = db.last_insert_id()
     sql = "INSERT INTO item_classes (item_id, title, value) VALUES (?, ?, ?)"
@@ -58,4 +73,4 @@ def find_items(query):
              OR genre LIKE ? OR place LIKE ?
              ORDER BY id DESC """
     like = "%" + query + "%"
-    return db.query(sql, [like, like, like, like])
+    return db.query(sql, [like, like, like, like]) 
