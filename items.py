@@ -1,7 +1,17 @@
 import db
-def add_item(title, meeting, place, genre, book_type, description, user_id):
+def add_item(title, meeting, place, genre, book_type, description, user_id, classes):
     sql = """INSERT INTO items (title, meeting, place, genre, book_type, description, user_id) VALUES (?, ?, ?, ?, ? ,? ,?)"""
     db.execute(sql, [title, meeting, place, genre, book_type, description, user_id])
+
+    item_id = db.last_insert_id()
+    sql = "INSERT INTO item_classes (item_id, title, value) VALUES (?, ?, ?)"
+    for title, value in classes:
+        db.execute(sql,  [item_id, title, value])
+
+
+def get_classes(item_id):
+    sql = "SELECT title, value FROM item_classes WHERE item_id = ?"
+    return db.query(sql, [item_id])
 
 def get_items():
     sql = "SELECT id, title FROM items ORDER BY id DESC"
