@@ -7,6 +7,7 @@ import config
 import db
 import items
 from datetime import datetime
+import users
 
 
 app = Flask(__name__)
@@ -27,6 +28,18 @@ def new_item():
 def index():
     all_items = items.get_items()
     return render_template("index.html", items= all_items)
+
+@app.route("/user/<int:user_id>")
+def show_user(user_id):
+    user = users.get_user(user_id)
+    if not user:
+        abort(404)
+    items =  users.get_items(user_id)
+    return render_template("show_user.html", user = user, items = items)
+
+
+
+
 
 @app.route("/find_item")
 def find_item():
