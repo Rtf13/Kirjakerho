@@ -19,9 +19,12 @@ def add_item(title, meeting, place, description, user_id, classes):
     db.execute(sql, [title, meeting, place, description, user_id])
 
     item_id = db.last_insert_id()
+
+
     sql = "INSERT INTO item_classes (item_id, title, value) VALUES (?, ?, ?)"
     for title, value in classes:
         db.execute(sql,  [item_id, title, value])
+
 
 
 def get_classes(item_id):
@@ -74,7 +77,7 @@ def find_items(query):
     sql = """SELECT id, title
              FROM items
              WHERE title LIKE ? OR description LIKE ?
-             OR genre LIKE ? OR place LIKE ?
+             OR  genre LIKE ? OR place LIKE ?
              ORDER BY id DESC """
     like = "%" + query + "%"
     return db.query(sql, [like, like, like, like]) 
