@@ -101,9 +101,7 @@ def create_item():
                 abort(403)
             classes.append((class_title,class_value))
 
-    item_id = items.add_item(title, meeting, place, description, user_id, classes)
-    items.add_signup(item_id, user_id)
-
+    items.add_item(title, meeting, place, description, user_id, classes)
 
     return redirect("/")
 
@@ -214,7 +212,7 @@ def create():
     except sqlite3.IntegrityError:
         return "VIRHE: tunnus on jo varattu"
 
-    return "Tunnus luotu"
+    return "Tunnus luotu" 
 
 
 @app.route("/login", methods=["GET", "POST"])

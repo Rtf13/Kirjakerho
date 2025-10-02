@@ -25,6 +25,10 @@ def add_item(title, meeting, place, description, user_id, classes):
     for title, value in classes:
         db.execute(sql,  [item_id, title, value])
 
+    sql = """INSERT INTO attendees (item_id, user_id) VALUES (?, ? )"""
+    db.execute(sql, [item_id, user_id])
+
+
 
 def add_signup(item_id, user_id):
     existing = db.query(
@@ -87,6 +91,10 @@ def update_item(item_id, title, meeting, place, description, classes):
 
 
 def remove_item(item_id):
+
+    sql = "DELETE FROM attendees WHERE item_id = ?"
+    db.execute(sql, [item_id])
+    
     sql = "DELETE FROM item_classes WHERE item_id = ?"
     db.execute(sql, [item_id])
 
