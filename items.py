@@ -26,6 +26,23 @@ def add_item(title, meeting, place, description, user_id, classes):
         db.execute(sql,  [item_id, title, value])
 
 
+def add_signup(item_id, user_id):
+    existing = db.query(
+        "SELECT 1 FROM attendees WHERE item_id=? AND user_id=?", [item_id, user_id])
+    if existing:
+        return False
+    sql = """INSERT INTO attendees (item_id, user_id) VALUES (?, ?)"""
+    db.execute(sql, [item_id, user_id])
+
+
+def get_attendees(item_id):
+    sql = """
+        SELECT u.id AS user_id, u.username
+        FROM attendees a
+        JOIN users u ON a.user_id = u.id
+        WHERE a.item_id = ?
+    """
+    return db.query(sql, [item_id])
 
 def get_classes(item_id):
     sql = "SELECT title, value FROM item_classes WHERE item_id = ?"

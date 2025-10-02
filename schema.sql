@@ -4,6 +4,8 @@ CREATE TABLE users (
     password_hash TEXT
 );
 
+
+
 CREATE TABLE items (
    id INTEGER PRIMARY KEY,
    title TEXT,
@@ -24,4 +26,11 @@ CREATE TABLE classes (
     id INTEGER PRIMARY KEY,
     title TEXT, 
     value TEXT
+);
+
+CREATE TABLE attendees(
+    id INTEGER PRIMARY KEY,
+    item_id INTEGER REFERENCES items,
+    user_id INTEGER REFERENCES users,
+    UNIQUE(item_id, user_id)
 );

@@ -24,6 +24,7 @@ def new_item():
     classes = items.get_all_classes()
     return render_template("new_item.html", classes = classes)
 
+
 @app.route("/")
 def index():
     all_items = items.get_items()
@@ -57,7 +58,10 @@ def show_item(item_id):
     if not item:
         abort(404)
     classes = items.get_classes(item_id)
-    return render_template("show_item.html", item = item, classes = classes)
+    attendees = items.get_attendees(item_id)
+
+    print("Attendees for item", item_id, attendees)
+    return render_template("show_item.html", item = item, classes = classes, attendees = attendees)
 
 
 @app.template_filter("date_clean")
@@ -82,7 +86,6 @@ def create_item():
     if not place or  len(place) > 50:
         abort(403)
     
-
     description = request.form["description"]
     if not description or  len(description) > 1000:
         abort(403)
@@ -98,10 +101,24 @@ def create_item():
                 abort(403)
             classes.append((class_title,class_value))
 
-    items.add_item(title, meeting, place, description, user_id, classes)
+    item_id = items.add_item(title, meeting, place, description, user_id, classes)
+    items.add_signup(item_id, user_id)
 
 
     return redirect("/")
+
+@app.route("/create_signup", methods=["POST"])
+def create_signup():
+    require_login()
+    item_id = request.form["item_id"]
+    item = items.get_item(item_id)
+    if not item:
+        abort(403)
+    user_id = session["user_id"]
+
+    items.add_signup(item_id, user_id)
+    return redirect("/item/" + str(item_id))
+
 
 @app.route("/edit_item/<int:item_id>")
 def edit_item(item_id):

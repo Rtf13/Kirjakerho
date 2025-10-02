@@ -38,6 +38,20 @@
    </ul>
   </p>
   {% endif %}
+  <h2>Osallistujat</h2>
+  <ul>
+  {% for attendee in attendees %}
+    <li> <a href="/user/{{ attendee.user_id }}">{{ attendee.username }}</a></li>
+  {% else %}
+    <li>Ei osallistujia vielä</li>
+  {% endfor %}
+</ul>
+  <h2>Ilmoittaudu tapahtumaan</h2>
+  <form action="/create_signup" method="post">
+    <input type="hidden" name="item_id" value="{{item.id}}">
+    <input type="submit" value="Ilmoittaudu"/>
+
+  </form>
   <p>
     Tapahtuman järjestäjä:<a  href="/user/{{item.user_id}}"> {{item.username}}</a>
   </p>
