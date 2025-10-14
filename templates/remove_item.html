@@ -3,12 +3,14 @@
 {% block title %}Tapahtuman poisto{% endblock %}
 
 {% block content %}
-<h2>Tapahtuman poisto</h2>
-<p>Tapahtuma: {{ item.title}} <p/>
+<h2>{{ item.title }}</h2>
+<h3>Tapahtuman poisto</h3>
 <p>Haluatko varmasti poistaa tämän tapahtuman?<p/>
-<form action="/remove_item/{{ item.id}}" method="post">
+<form action="/remove_item/{{ item.id }}" method="post">
   <input type = "submit" name = "remove" value = "Poista tapahtuma">
   <input type = "submit" name = "back" value = "Palaa takaisin">
 </form>
-
+<p>
+  <a href="/item/{{ item.id}}">Takaisin tapahtumaan</a>
+</p>
 {% endblock %}

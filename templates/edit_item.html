@@ -3,7 +3,8 @@
 {% block title %}Tapahtuman muokkaus{% endblock %}
 
 {% block content %}
-<h2>Tapahtuman muokkaus</h2>
+<h2>{{ item.title }}</h2>
+<h3>Tapahtuman muokkaus</h3>
 <form action="/update_item" method="post">
 <p>
   Otsikko: <br />
@@ -44,4 +45,8 @@
 <input type="hidden" name= "item_id" value = "{{item.id}}" />
 <input type="submit" value="Päivitä tapahtumaa" />
 </form>
+<p>
+  <a href="/item/{{ item.id}}">Takaisin tapahtumaan</a>
+</p>
+
 {% endblock %}
