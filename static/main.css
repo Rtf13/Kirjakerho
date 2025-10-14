@@ -5,8 +5,16 @@ body {
   background-color: rgb(179, 161, 132);
 }
 
-.item {
+.item{
   border: 2px solid black;
   margin: 1em;
   padding: 0.2em 0.5em;
+}
+
+.info {
+  border: 2px solid rgb(0, 0, 0);
+  margin: 1em;
+  padding: 0.5em;
+  background-color: rgb(247, 5, 5);
+  color: white;
 }
