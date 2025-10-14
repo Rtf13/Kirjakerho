@@ -103,7 +103,9 @@ def create_item():
 
     items.add_item(title, meeting, place, description, user_id, classes)
 
-    return redirect("/")
+    item_id = db.last_insert_id()
+
+    return redirect("/item/" + str(item_id))
 
 @app.route("/create_signup", methods=["POST"])
 def create_signup():
