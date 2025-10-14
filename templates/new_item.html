@@ -1,48 +1,41 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Järjestä tapahtuma</title>
-</head>
+{% block title %}Järjestä tapahtuma{% endblock %}
 
-<body>
-  <h1>Järjestä tapahtuma</h1>
-  <form action="/create_item" method="post">
-    <p>
-      Otsikko: <br />
-      <input type="text" name="title" maxlength="50" required />
-    </p>
+{% block content %}
+<h1>Järjestä tapahtuma</h1>
+<form action="/create_item" method="post">
+  <p>
+    Otsikko: <br />
+    <input type="text" name="title" maxlength="50" required />
+  </p>
 
-    <p>
-      Aika: <br />
-      <input type="datetime-local" name="meeting" required />
-    </p>
-    
-    <p>
-      Paikka: <br />
-      <input type="text" name="place" maxlength="50" required />
-    </p>
-    {% for class in classes %}
-    <p>
-      {{ class }}: <br />
-      <select name ="classes">
-        <option value="">(valitse)</option>
-     {% for option in classes[class] %}
-        <option value="{{ class }}:{{ option }}">{{ option }}</option>
-     {% endfor %}
-     </select>
-    </p>
+  <p>
+    Aika: <br />
+    <input type="datetime-local" name="meeting" required />
+  </p>
+
+  <p>
+    Paikka: <br />
+    <input type="text" name="place" maxlength="50" required />
+  </p>
+  {% for class in classes %}
+  <p>
+    {{ class }}: <br />
+    <select name ="classes">
+      <option value="">(valitse)</option>
+    {% for option in classes[class] %}
+      <option value="{{ class }}:{{ option }}">{{ option }}</option>
     {% endfor %}
-    
-    
-    
-    <p>
-      Keskusteluaihe: <br />
-       <textarea name = "description" rows = "8" cols = "60" maxlength="1000" required ></textarea>
-    </p>
-    
-    <input type="submit" value="Luo ilmoitus" />
-  </form>
-</body>
+    </select>
+  </p>
+  {% endfor %}
 
-</html>
+  <p>
+    Keskusteluaihe: <br />
+      <textarea name = "description" rows = "8" cols = "60" maxlength="1000" required ></textarea>
+  </p>
+
+  <input type="submit" value="Luo ilmoitus" />
+</form>
+{% endblock %}
