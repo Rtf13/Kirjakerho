@@ -22,8 +22,8 @@ def add_item(title, meeting, place, description, user_id, classes):
 
 
     sql = "INSERT INTO item_classes (item_id, title, value) VALUES (?, ?, ?)"
-    for title, value in classes:
-        db.execute(sql,  [item_id, title, value])
+    for class_title, class_value in classes:
+        db.execute(sql,  [item_id, class_title, class_value])
 
     sql = """INSERT INTO attendees (item_id, user_id) VALUES (?, ? )"""
     db.execute(sql, [item_id, user_id])

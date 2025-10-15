@@ -13,7 +13,7 @@
 {% endif %}
 
 <p>
-  {{item.description}}
+  {{item.description | show_lines }}
 </p>
 <ul>
  <li>Aika: {{item.meeting|date_clean}}</li>
