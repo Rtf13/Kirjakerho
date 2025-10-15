@@ -15,7 +15,8 @@ def get_all_classes():
 
 
 def add_item(title, meeting, place, description, user_id, classes):
-    sql = """INSERT INTO items (title, meeting, place, description, user_id) VALUES (?, ?, ?, ?, ? )"""
+    sql = """INSERT INTO items (title, meeting, place, description, user_id)
+             VALUES (?, ?, ?, ?, ? )"""
     db.execute(sql, [title, meeting, place, description, user_id])
 
     item_id = db.last_insert_id()
@@ -90,8 +91,8 @@ def update_item(item_id, title, meeting, place, description, classes):
     db.execute(sql, [item_id])
 
     sql = "INSERT INTO item_classes (item_id, title, value) VALUES (?, ?, ?)"
-    for title, value in classes:
-        db.execute(sql,  [item_id, title, value])
+    for class_title, class_value in classes:
+        db.execute(sql,  [item_id, class_title, class_value])
 
 
 
@@ -99,7 +100,7 @@ def remove_item(item_id):
 
     sql = "DELETE FROM attendees WHERE item_id = ?"
     db.execute(sql, [item_id])
-    
+
     sql = "DELETE FROM item_classes WHERE item_id = ?"
     db.execute(sql, [item_id])
 

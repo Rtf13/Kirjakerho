@@ -52,8 +52,8 @@ def show_user(user_id):
     user = users.get_user(user_id)
     if not user:
         abort(404)
-    items =  users.get_items(user_id)
-    return render_template("show_user.html", user = user, items = items)
+    user_items =  users.get_items(user_id)
+    return render_template("show_user.html", user = user, items = user_items)
 
 
 
@@ -103,7 +103,7 @@ def create_item():
     place = request.form["place"]
     if not place or  len(place) > 50:
         abort(403)
-    
+
     description = request.form["description"]
     if not description or  len(description) > 1000:
         abort(403)
@@ -155,7 +155,8 @@ def edit_item(item_id):
     for entry in items.get_classes(item_id):
         classes[entry["title"]] = entry["value"]
 
-    return render_template("edit_item.html", item = item, classes = classes, all_classes = all_classes)
+    return render_template("edit_item.html", item = item, classes = classes,
+                           all_classes = all_classes)
 
 
 @app.route("/update_item", methods=["POST"])
@@ -205,7 +206,7 @@ def remove_item(item_id):
     if not item:
         abort(404)
     if item["user_id"] != session["user_id"]:
-            abort(403)
+        abort(403)
 
     if request.method == "GET":
         return render_template("remove_item.html", item = item)
@@ -215,8 +216,7 @@ def remove_item(item_id):
         if "remove" in request.form:
             items.remove_item(item_id)
             return redirect("/")
-        else:
-            return redirect("/item/" + str(item_id))
+        return redirect("/item/" + str(item_id))
 
 
 
@@ -257,9 +257,9 @@ def login():
             session["username"] = username
             session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
-        else:
-            flash("VIRHE: väärä tunnus tai salasana")
-            return redirect("/login")
+
+        flash("VIRHE: väärä tunnus tai salasana")
+        return redirect("/login")
 
 @app.route("/logout")
 def logout():
